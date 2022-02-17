@@ -41,17 +41,7 @@ function processKey(key)
     {
         if (Calculator.operatorFound(current))
         {
-            if (prev.length == 0)
-                prev += current.slice(0, current.length);
-            else
-            {
-                let i = 0;
-                while (!(Calculator.isOperator(current[i])))
-                {
-                    i++;
-                }
-                prev += current.slice(i, current.length);
-            }
+            updatePreviousAnswer();
             current = Calculator.verifyOuput(
                 ()=>Calculator.solveEquation(current).toString()
                 );
@@ -75,6 +65,7 @@ function processKey(key)
     }
     else if (key == '=')
     {
+        updatePreviousAnswer();
         current = Calculator.verifyOuput(
             ()=>Calculator.solveEquation(current).toString()
             );
@@ -100,6 +91,19 @@ function processKey(key)
     }
     document.getElementById('previnput').innerHTML = prev; 
     document.getElementById('input').innerHTML = current;
+}
+function updatePreviousAnswer() {
+    if (prev.length == 0)
+    prev += current.slice(0, current.length);
+    else
+    {
+        let i = 0;
+        while (!(Calculator.isOperator(current[i])))
+        {
+            i++;
+        }
+        prev += current.slice(i, current.length);
+    }
 }
 class Calculator{
     constructor()
